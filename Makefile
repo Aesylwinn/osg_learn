@@ -6,9 +6,10 @@ SDIR    = src
 ODIR    = obj
 EXEC    = party
 
-_OBJ    = main.o
+_OBJ    = main.o geometry.o
 OBJS    = $(patsubst %,$(ODIR)/%,$(_OBJ))
-DEPS    =
+_DEP    = geometry.hpp
+DEPS    = $(patsubst %,$(SDIR)/%,$(_DEP))
 
 
 $(ODIR)/%.o: $(SDIR)/%.cpp $(DEPS)

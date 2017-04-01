@@ -1,6 +1,6 @@
 CC      = g++
 CFLAGS  = -g -Wall
-LDFLAGS =
+LDFLAGS = -losg -losgViewer -losgDB
 
 SDIR    = src
 ODIR    = obj

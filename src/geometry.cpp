@@ -50,7 +50,7 @@ osg::ref_ptr<osg::Node> createPlane(int w, int h)
 
     // Colors
     osg::ref_ptr<osg::Vec4Array> colors = new osg::Vec4Array();
-    colors->push_back(osg::Vec4(0.f, 1.0f,  0.f, 1.0f));
+    colors->push_back(osg::Vec4(0.1f, 1.0f,  0.1f, 1.0f));
     geometry->setColorArray(colors.get());
     geometry->setColorBinding(osg::Geometry::BIND_OVERALL);
 

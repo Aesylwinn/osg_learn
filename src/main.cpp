@@ -34,21 +34,38 @@ int main(int argc, const char* argv[])
     // Some lighting
     osg::ref_ptr<osg::Light> light = new osg::Light();
     light->setLightNum(0);
-    light->setAmbient(osg::Vec4(0.1f, 0.1f, 0.1f, 1.0f));
+    light->setAmbient(osg::Vec4(0.1f, 0.2f, 0.2f, 1.0f));
     light->setDiffuse(osg::Vec4(0.3f, 0.7f, 0.7f, 1.0f));
     light->setSpecular(osg::Vec4(0.3f, 0.7f, 0.7f, 1.0f));
     light->setPosition(osg::Vec4(10.f, 10.f, 10.f, 1.0f));
     light->setDirection(osg::Vec3(-0.577f, -0.577f, -0.577f));
     light->setSpotCutoff(25.0f);
 
+    osg::ref_ptr<osg::Light> purpleLight = new osg::Light();
+    purpleLight->setLightNum(1);
+    purpleLight->setAmbient(osg::Vec4(0.2f, 0.1f, 0.2f, 1.0f));
+    purpleLight->setDiffuse(osg::Vec4(0.7f, 0.2f, 0.8f, 1.0f));
+    purpleLight->setSpecular(osg::Vec4(0.7f, 0.2f, 0.8f, 1.0f));
+    purpleLight->setPosition(osg::Vec4(-10, -10, 10, 1));
+    purpleLight->setDirection(osg::Vec3(0.577f, 0.577f, -0.577f));
+    purpleLight->setSpotCutoff(25.0f);
+
+    // Attach lights to scene
+    osg::ref_ptr<osg::Group> lightRoot = new osg::Group();
+    root->addChild(lightRoot);
+
     osg::ref_ptr<osg::LightSource> lightSrc = new osg::LightSource();
     lightSrc->setLight(light);
     lightSrc->setLocalStateSetModes(osg::StateAttribute::ON);
     lightSrc->setStateSetModes(*rootSS, osg::StateAttribute::ON);
-
-    osg::ref_ptr<osg::Group> lightRoot = new osg::Group();
     lightRoot->addChild(lightSrc.get());
-    root->addChild(lightRoot);
+
+    osg::ref_ptr<osg::LightSource> purpleLightSrc = new osg::LightSource();
+    purpleLightSrc->setLight(purpleLight);
+    purpleLightSrc->setLocalStateSetModes(osg::StateAttribute::ON);
+    purpleLightSrc->setStateSetModes(*rootSS, osg::StateAttribute::ON);
+    lightRoot->addChild(purpleLightSrc.get());
+
 
     // Run scene
     return viewer->run();

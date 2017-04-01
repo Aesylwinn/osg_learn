@@ -1,0 +1,6 @@
+# Compiled files
+*.o
+
+# Executable
+party
+

@@ -37,8 +37,8 @@ int main(int argc, const char* argv[])
     light->setAmbient(osg::Vec4(0.1f, 0.1f, 0.1f, 1.0f));
     light->setDiffuse(osg::Vec4(0.3f, 0.7f, 0.7f, 1.0f));
     light->setSpecular(osg::Vec4(0.3f, 0.7f, 0.7f, 1.0f));
-    light->setPosition(osg::Vec4(0.f, 0.f, 10.0f, 1.0f));
-    light->setDirection(osg::Vec3(0, 0, -1));
+    light->setPosition(osg::Vec4(10.f, 10.f, 10.f, 1.0f));
+    light->setDirection(osg::Vec3(-0.577f, -0.577f, -0.577f));
     light->setSpotCutoff(25.0f);
 
     osg::ref_ptr<osg::LightSource> lightSrc = new osg::LightSource();

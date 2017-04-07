@@ -2,6 +2,7 @@
 
 #include <osg/Group>
 #include <osg/PositionAttitudeTransform>
+#include <osg/Shader>
 #include <osg/Vec3d>
 #include <osgViewer/Viewer>
 #include <osgDB/ReadFile>
@@ -9,6 +10,13 @@
 int main(int argc, const char* argv[])
 {
     osg::ref_ptr<osgViewer::Viewer> viewer = new osgViewer::Viewer();
+    viewer->realize();
+
+    // Setup camera
+    osg::ref_ptr<osg::State> camState = viewer->getCamera()->getGraphicsContext()->getState();
+    camState->setUseModelViewAndProjectionUniforms(true);
+    camState->setUseVertexAttributeAliasing(true);
+
 
     // The root node everything else attaches to
     osg::ref_ptr<osg::Group> root = new osg::Group();
@@ -16,10 +24,23 @@ int main(int argc, const char* argv[])
     viewer->setSceneData(root);
 
 
+    // Shaders
+    osg::ref_ptr<osg::Program> modelProgram = new osg::Program();
+    modelProgram->setName("modelshader");
+    osg::ref_ptr<osg::Shader> vertShader =
+        osg::Shader::readShaderFile(osg::Shader::VERTEX, "test/model.vert");
+    osg::ref_ptr<osg::Shader> fragShader =
+        osg::Shader::readShaderFile(osg::Shader::FRAGMENT, "test/model.frag");
+
+    modelProgram->addShader(vertShader.get());
+    modelProgram->addShader(fragShader.get());
+
+
     // A shiny cow
     osg::ref_ptr<osg::PositionAttitudeTransform> cowTrans =
         new osg::PositionAttitudeTransform();
     cowTrans->addChild(osgDB::readNodeFile("test/cow.osg"));
+    cowTrans->getOrCreateStateSet()->setAttribute(modelProgram.get(), osg::StateAttribute::ON);
     root->addChild(cowTrans);
 
 
@@ -28,6 +49,7 @@ int main(int argc, const char* argv[])
         new osg::PositionAttitudeTransform();
     planeTrans->addChild(createPlane(30, 30));
     planeTrans->setPosition(osg::Vec3d(0, 0, -3));
+    planeTrans->getOrCreateStateSet()->setAttribute(modelProgram.get(), osg::StateAttribute::ON);
     root->addChild(planeTrans);
 
 

@@ -1,6 +1,6 @@
 CC      = g++
 CFLAGS  = -g -Wall
-LDFLAGS = -losg -losgViewer -losgDB
+LDFLAGS = -L /usr/local/lib64 -losg -losgViewer -losgDB
 
 SDIR    = src
 ODIR    = obj

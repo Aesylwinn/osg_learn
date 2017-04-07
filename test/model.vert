@@ -1,4 +1,4 @@
-#version 400
+#version 130
 
 uniform mat4 osg_ModelViewProjectionMatrix;
 in vec4 osg_Vertex;

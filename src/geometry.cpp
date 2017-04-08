@@ -57,7 +57,7 @@ osg::ref_ptr<osg::Node> createPlane(int w, int h)
 
     // Normals
     osg::ref_ptr<osg::Vec3Array> normals = new osg::Vec3Array();
-    normals->push_back(osg::Vec3(0.f, 0.f, -1.0f));
+    normals->push_back(osg::Vec3(0.f, 0.f, 1.0f));
     geometry->setNormalArray(normals.get());
     geometry->setNormalBinding(osg::Geometry::BIND_OVERALL);
 

@@ -36,14 +36,20 @@ int main(int argc, const char* argv[])
     viewer->addSlave(camera.get(), osg::Matrixd(), osg::Matrixd());
     viewer->realize();
 
-    context->getState()->setUseModelViewAndProjectionUniforms(true);
-    context->getState()->setUseVertexAttributeAliasing(true);
+    osg::ref_ptr<osg::State> state = context->getState();
+    state->setUseModelViewAndProjectionUniforms(true);
+    state->setUseVertexAttributeAliasing(true);
 
 
     // The root node everything else attaches to
     osg::ref_ptr<osg::Group> root = new osg::Group();
     osg::ref_ptr<osg::StateSet> rootSS = root->getOrCreateStateSet();
     viewer->setSceneData(root);
+    
+    osg::ref_ptr<osg::Uniform> lightPosUniform = new osg::Uniform("lightPos", osg::Vec4f(10, 10, 10, 1));
+    osg::ref_ptr<osg::Uniform> brightUniform = new osg::Uniform("brightness", 0.7f);
+    rootSS->addUniform(lightPosUniform);
+    rootSS->addUniform(brightUniform);
 
 
     // Shaders

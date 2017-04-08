@@ -1,30 +1,23 @@
 #version 130
 
 uniform mat4 osg_ModelViewProjectionMatrix;
+uniform mat4 osg_ModelViewMatrix;
+uniform mat4 osg_ViewMatrixInverse;
 
-uniform vec4 lightPos;
-uniform float brightness;
-const vec4 lightColor = vec4(1, 1, 1, 1);
-const vec4 ambient = vec4(0.1, 0.1, 0.1, 1);
-
-in vec4 osg_Vertex;
-in vec4 osg_Normal;
+in vec3 osg_Vertex;
+in vec3 osg_Normal;
 in vec4 osg_Color;
 
+out vec3 pos;
+out vec3 norm;
 out vec4 color;
 
 void main(void)
 {
-    vec4 position = osg_ModelViewProjectionMatrix * osg_Vertex;
-    vec4 lightDir = lightPos - gl_Position;
+    pos = (osg_ViewMatrixInverse * osg_ModelViewMatrix * vec4(osg_Vertex, 1)).xyz;
+    norm = osg_Normal;
+    color = osg_Color;
 
-    float dist = length(lightDir);
-    lightDir /= dist;
-
-    float diff = max(dot(osg_Normal, lightDir) * (10 / dist), 0);
-    vec4 diffuse = diff * brightness * lightColor;
-
-    gl_Position = position;
-    color = (diffuse + ambient) * osg_Color;
+    gl_Position = osg_ModelViewProjectionMatrix * vec4(osg_Vertex, 1);
 }
 

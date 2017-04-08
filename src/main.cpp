@@ -46,10 +46,18 @@ int main(int argc, const char* argv[])
     osg::ref_ptr<osg::StateSet> rootSS = root->getOrCreateStateSet();
     viewer->setSceneData(root);
     
-    osg::ref_ptr<osg::Uniform> lightPosUniform = new osg::Uniform("lightPos", osg::Vec4f(10, 10, 10, 1));
-    osg::ref_ptr<osg::Uniform> brightUniform = new osg::Uniform("brightness", 0.7f);
+    osg::ref_ptr<osg::Uniform> lightPosUniform = new osg::Uniform("lightPos", 
+        osg::Vec4f(10, 10, 10, 1));
+    osg::ref_ptr<osg::Uniform> lightColUniform = new osg::Uniform("lightColor",
+        osg::Vec4f(0.6, 0.7, 0.7, 1));
+    osg::ref_ptr<osg::Uniform> brightUniform = new osg::Uniform("brightness",
+        0.7f);
+    osg::ref_ptr<osg::Uniform> ambientUniform = new osg::Uniform("ambient",
+        osg::Vec4f(0.1, 0.1, 0.1, 1));
     rootSS->addUniform(lightPosUniform);
+    rootSS->addUniform(lightColUniform);
     rootSS->addUniform(brightUniform);
+    rootSS->addUniform(ambientUniform);
 
 
     // Shaders

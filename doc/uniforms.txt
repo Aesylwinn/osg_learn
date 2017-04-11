@@ -1,0 +1,13 @@
+osg_ModelViewMatrix
+osg_ModelViewProjectionMatrix
+osg_ProjectionMatrix
+osg_NormalMatrix
+
+osg_FrameNumber
+osg_FrameTime
+osg_DeltaFrameTime
+osg_SimulationTime
+osg_DeltaSimulationTime
+osg_ViewMatrix
+osg_ViewMatrixInverse
+

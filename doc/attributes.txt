@@ -1,0 +1,14 @@
+osg_Vertex              vec4
+osg_Normal              vec3
+osg_Color               vec4
+osg_MultiTexCoord[0-7]  vec4
+
+osg_SecondaryColor      vec4
+osg_FogCoord            float
+osg_Vertex              vec4
+osg_Normal              vec3
+osg_Color               vec4
+osg_SecondaryColor      vec4
+osg_FogCoord            float
+osg_MultiTexCoord[0-7]  vec4
+

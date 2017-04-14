@@ -10,6 +10,8 @@ in vec3 pos;
 in vec3 norm;
 in vec4 color;
 
+out vec4 osg_FragColor;
+
 void main(void)
 {
     vec3 lightDir = lightPos - pos;
@@ -19,6 +21,6 @@ void main(void)
     float diff = max(dot(norm, lightDir), 0);
     vec4 diffuse = min(diff * brightness, 1) * lightColor;
 
-    gl_FragColor = (diffuse + ambient) * color;
+    osg_FragColor = (diffuse + ambient) * color;
 }
 

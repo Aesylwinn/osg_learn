@@ -1,6 +1,7 @@
 #include "geometry.hpp"
 
 #include <cassert>
+#include <iostream>
 #include <osg/Group>
 #include <osg/PositionAttitudeTransform>
 #include <osg/Shader>
@@ -23,7 +24,12 @@ int main(int argc, const char* argv[])
     traits->sharedContext = 0;
 
     osg::ref_ptr<osg::GraphicsContext> context = osg::GraphicsContext::createGraphicsContext(traits.get());
-    assert(context.get());
+    assert(context.get() && context.valid());
+    context->setClearColor(osg::Vec4f(0.2f, 0.2f, 0.2f, 1.0f));
+    context->setClearMask(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+
+    std::cout << "Created Context" << std::endl;
 
 
     // Setup camera
@@ -33,12 +39,15 @@ int main(int argc, const char* argv[])
     GLenum buffer = traits->doubleBuffer ? GL_BACK : GL_FRONT;
     camera->setDrawBuffer(buffer);
     camera->setReadBuffer(buffer);
-    viewer->addSlave(camera.get(), osg::Matrixd(), osg::Matrixd());
+    viewer->addSlave(camera.get(), osg::Matrixd(), osg::Matrixd::scale(1.0, 1.0, 1.0));
     viewer->realize();
 
     osg::ref_ptr<osg::State> state = context->getState();
     state->setUseModelViewAndProjectionUniforms(true);
     state->setUseVertexAttributeAliasing(true);
+
+
+    std::cout << "Created Camera" << std::endl;
 
 
     // The root node everything else attaches to
@@ -60,6 +69,9 @@ int main(int argc, const char* argv[])
     rootSS->addUniform(ambientUniform);
 
 
+    std::cout << "Created Root Node." << std::endl;
+
+
     // Shaders
     osg::ref_ptr<osg::Program> modelProgram = new osg::Program();
     modelProgram->setName("modelshader");
@@ -72,12 +84,18 @@ int main(int argc, const char* argv[])
     modelProgram->addShader(fragShader.get());
 
 
+    std::cout << "Created Shaders." << std::endl;
+
+
     // A shiny cow
     osg::ref_ptr<osg::PositionAttitudeTransform> cowTrans =
         new osg::PositionAttitudeTransform();
     cowTrans->addChild(osgDB::readNodeFile("test/cow.osg"));
     cowTrans->getOrCreateStateSet()->setAttribute(modelProgram.get(), osg::StateAttribute::ON);
     root->addChild(cowTrans);
+
+
+    std::cout << "Created Cow." << std::endl;
 
 
     // A simple plane
@@ -87,6 +105,9 @@ int main(int argc, const char* argv[])
     planeTrans->setPosition(osg::Vec3d(0, 0, -3));
     planeTrans->getOrCreateStateSet()->setAttribute(modelProgram.get(), osg::StateAttribute::ON);
     root->addChild(planeTrans);
+
+
+    std::cout << "Created plane." << std::endl;
 
 
     // Run scene

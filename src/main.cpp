@@ -8,6 +8,7 @@
 #include <osg/Vec3d>
 #include <osgViewer/Viewer>
 #include <osgDB/ReadFile>
+#include <osgDB/WriteFile>
 
 int main(int argc, const char* argv[])
 {
@@ -43,6 +44,7 @@ int main(int argc, const char* argv[])
     viewer->realize();
 
     osg::ref_ptr<osg::State> state = context->getState();
+    state->setCheckForGLErrors(osg::State::CheckForGLErrors::ONCE_PER_ATTRIBUTE);
     state->setUseModelViewAndProjectionUniforms(true);
     state->setUseVertexAttributeAliasing(true);
 
@@ -108,6 +110,8 @@ int main(int argc, const char* argv[])
 
 
     std::cout << "Created plane." << std::endl;
+
+    //osgDB::writeObjectFile(*root, "out.osg");
 
 
     // Run scene
